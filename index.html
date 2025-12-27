@@ -1,0 +1,123 @@
+<!-- すべてのページのヘッダーとフッターのコピペ用 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- ここに head-template.html をコピペ -->
+  <!-- ▼ OJapp 共通 HEAD（コピペ用） -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>OJ-Password ReBuilder</title>
+
+<!-- ファビコン -->
+<link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/icon/favicon-48.png">
+
+<!-- iPhone ホームアイコン -->
+<link rel="apple-touch-icon" sizes="180x180" href="/icon/icon-180.png">
+
+<!-- PWA（必要なら有効化） -->
+<!-- <link rel="manifest" href="/OJapp/manifest.json"> -->
+
+<meta name="theme-color" content="#2bb7ff">
+
+<!-- 共通CSS -->
+<link rel="stylesheet" href="/style.css">
+<!-- ダークモード呼ぶ -->
+<script src="/darkmode.js"></script>
+</head>
+
+<body>
+
+<div id="header"></div>
+<script>
+fetch("/header.html")
+  .then(r => r.text())
+  .then(h => document.getElementById("header").innerHTML = h);
+</script>
+
+
+  <!-- ページ固有の内容を書く -->
+<div class="main">
+
+  <h1>OJ-Password ReBuilder</h1>
+  <p class="lead">
+    マスターキーとサービス名から<br>
+    「保存しない安全パスワード」を再構築します。
+  </p>
+
+  <!-- マスターキー -->
+  <div class="section">
+    <div class="section-title">① マスターキー</div>
+    <input type="password" id="masterKey" placeholder="例：manabi2025">
+  </div>
+
+  <!-- 作成月 -->
+  <div class="section">
+    <div class="section-title">② 作成月（ランダムでもOK）</div>
+    <input type="text" id="month" placeholder="例：202504（yyyymm）" maxlength="6">
+  </div>
+
+  <!-- 個数 -->
+<div class="section">
+  <div class="section-title">③ いくつ作る？</div>
+
+  <div id="count-row">
+    <select id="count">
+      <option value="1" selected>1 個</option>
+      <option value="2">2 個</option>
+      <option value="3">3 個</option>
+      <option value="4">4 個</option>
+      <option value="5">5 個</option>
+    </select>
+
+    <span style="font-size:14px; color:#666;">作る</span>
+  </div>
+</div>
+
+  <div id="placeWrap"></div>
+<!-- パスワード設定 -->
+<div class="section">
+  <div class="section-title">④ パスワード設定</div>
+
+  <label style="font-size:14px; font-weight:600;">長さ：</label>
+  <select id="pwLength">
+    <option value="10">10 文字</option>
+    <option value="12" selected>12 文字</option>
+    <option value="14">14 文字</option>
+    <option value="16">16 文字</option>
+    <option value="20">20 文字</option>
+  </select>
+
+  <br><br>
+
+  <label style="font-size:14px; font-weight:600;">記号：</label>
+  <label>
+    <input type="checkbox" id="useSymbol" checked>
+    記号を使う（.-_）
+  </label>
+</div>
+
+  <!-- 生成ボタン -->
+  <button id="generateBtn" class="btn blue large" style="margin-top: 20px;">
+    🔒 パスワードを生成
+  </button>
+
+  <!-- 結果 -->
+  <div id="resultArea" class="section" style="display:none; margin-top: 28px;">
+    <div class="section-title">🔑 生成結果</div>
+    <div id="resultList"></div>
+  </div>
+
+</div>
+
+
+<div class="footer">
+  © 2025 OJapp — Make Your Home Screen Free.<br>
+ OJ-Password ReBuilder v1.1 — Permanent Algorithm Version
+
+</div>
+<script src="/OJ-Pass/app.js"></script>
+</body>
+</html>
