@@ -363,3 +363,28 @@ input:focus {
 .breadcrumb a:hover {
   text-decoration: underline;
 }
+.pw-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.copyBtn {
+  padding: 4px 10px;
+  font-size: 13px;
+  background: #ffd85a;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.15s;
+}
+
+.copyBtn:hover {
+  background: #ffcc33;
+}
+
+.copyBtn:active {
+  transform: scale(0.95);
+}
