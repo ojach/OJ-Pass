@@ -1,0 +1,50 @@
+/* Password ReBuilder 専用 */
+#resultList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.pass-item {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
+}
+
+.pass-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.pass-value {
+  font-size: 18px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  word-break: break-all;
+  color: #0077ff;
+}
+#count-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    font-size: 13px;
+    color: var(--footer-text, #777);
+    border-top: 1px solid var(--footer-border, #eee);
+    background: var(--footer-bg, #fafafa);
+  }
+
+  /* ダークモード対応（CSS変数の書き換え） */
+  .dark .footer {
+    background: #1b1b1b;
+    color: #aaa;
+    border-color: #333;
+  }
