@@ -49,25 +49,25 @@ async function sha256hex(text) {
 // ========================================
 async function buildPassword(masterKey, service, month, length, allowSymbol) {
   const seed = `${masterKey}|${service}|${month}`;
-
-  // SHA256 → HEX (絶対変えない)
   const hex = await sha256hex(seed);
 
-  // 見間違い防止：I, O, l を除外した安全文字セット
   let chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
-
-  // 記号は . _ - のみ（変更しない）
   if (allowSymbol) chars += "._-";
 
   let password = "";
+  const hexLen = hex.length;
+
   for (let i = 0; i < length; i++) {
-    const part = hex.substr(i * 2, 2);       // 1byte
-    const num  = parseInt(part, 16);         // 0–255
-    password += chars[num % chars.length];   // 決定的
+    // HEX をループさせて常に値を取れるようにする
+    const part = hex.substr((i * 2) % hexLen, 2);
+    const num = parseInt(part, 16);
+
+    password += chars[num % chars.length];
   }
 
   return password;
 }
+
 
 
 // ========================================
