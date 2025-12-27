@@ -23,19 +23,20 @@
 <meta name="theme-color" content="#2bb7ff">
 
 <!-- 共通CSS -->
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="style.css">
 <!-- ダークモード呼ぶ -->
-<script src="/darkmode.js"></script>
+<script src="darkmode.js"></script>
 </head>
 
 <body>
 
-<div id="header"></div>
-<script>
-fetch("/header.html")
-  .then(r => r.text())
-  .then(h => document.getElementById("header").innerHTML = h);
-</script>
+<div class="header">
+  <a href="/" class="logo-link">
+    <img src="/icon/ojapp-logo.png?v=4" class="logo-img" alt="OJapp">
+    <span class="logo-text">OJ-Password ReBuilder v1.1</span>
+  </a>
+  <div class="switch" onclick="toggleTheme()">🤩</div>
+</div>
 
 
   <!-- ページ固有の内容を書く -->
