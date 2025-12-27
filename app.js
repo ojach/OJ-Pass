@@ -47,26 +47,61 @@ async function sha256hex(text) {
 // ========================================
 // パスワード生成（永久固定版）
 // ========================================
+// ========================================
+// SHA256 → HEX
+// ========================================
+async function sha256hex(text) {
+  const data = new TextEncoder().encode(text);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(hash)]
+          .map(b => b.toString(16).padStart(2, "0"))
+          .join("");
+}
+
+// ========================================
+// パスワード生成（記号必須ロジック統合）
+// ========================================
 async function buildPassword(masterKey, service, month, length, allowSymbol) {
+
   const seed = `${masterKey}|${service}|${month}`;
+
+  // SHA256 HEX
   const hex = await sha256hex(seed);
 
-  let chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
-  if (allowSymbol) chars += "._-";
+  // 記号セット
+  const symbols = "._-";
 
+  // 使用文字リスト（紛らわしい文字を除外）
+  let chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789";
+
+  if (allowSymbol) chars += symbols;
+
+  // まずは通常通りパスワード生成
   let password = "";
-  const hexLen = hex.length;
 
   for (let i = 0; i < length; i++) {
-    // HEX をループさせて常に値を取れるようにする
-    const part = hex.substr((i * 2) % hexLen, 2);
-    const num = parseInt(part, 16);
-
+    const part = hex.slice(i*2, i*2+2);
+    const num  = parseInt(part, 16);
     password += chars[num % chars.length];
+  }
+
+  // ====================================
+  // ★ 記号ONで、記号が1つも無かったら補正する
+  // ====================================
+  if (allowSymbol && !/[._-]/.test(password)) {
+
+    // 記号を決める：HEXの最後の1byteから決定論で選ぶ
+    const lastByteHex = hex.slice(-2);                 // 例 "af"
+    const lastNum     = parseInt(lastByteHex, 16);     // 0〜255
+    const forcedSym   = symbols[lastNum % symbols.length];
+
+    // 先頭1文字を記号に差し替えて永久固定
+    password = forcedSym + password.slice(1);
   }
 
   return password;
 }
+
 
 
 
