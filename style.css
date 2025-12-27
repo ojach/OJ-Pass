@@ -68,6 +68,14 @@
   align-items: center;
   gap: 10px;
 }
+#resultList code {
+  font-size: 26px;        /* ← ここを好きなサイズに */
+  font-weight: 700;       /* 太字で読みやすく */
+  letter-spacing: 1px;    /* 少し広げると超読みやすい */
+  display: inline-block;
+  margin-top: 6px;
+}
+
 .footer {
     width: 100%;
     text-align: center;
