@@ -135,10 +135,24 @@ generateBtn.addEventListener("click", async () => {
   html += `
     <div class="result-item" style="margin-bottom: 22px;">
       <strong>[${i + 1} 個目：${place}]</strong><br>
-      <code>${pass}</code>
+     <div class="pw-row">
+      <code class="pw">${pass}</code>
+      <button class="copyBtn" data-pw="${pass}">📋 コピー</button>
     </div>
-  `;
+  </div>
+`;
 }
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("copyBtn")) {
+    const pw = e.target.dataset.pw;
+    navigator.clipboard.writeText(pw).then(() => {
+      e.target.textContent = "✔ コピー済み";
+      setTimeout(() => {
+        e.target.textContent = "📋 コピー";
+      }, 1200);
+    });
+  }
+});
 
 
   resultList.innerHTML = html;
